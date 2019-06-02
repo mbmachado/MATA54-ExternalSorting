@@ -16,7 +16,7 @@ uma vírgula, seguida do conteúdo. Não pode ser gerado nenhum caractere a
 mais na saída.
 
 ## Observações:
-1. O arquivo com os registros de entrada será chamado entrada.dat. O arquivo de saída deve ser chamado saida.dat.
+1. O arquivo com os registros de entrada será chamado **entrada.dat**. O arquivo de saída deve ser chamado **saida.dat**.
 
 2. O programa deve conter duas constantes: MAXNARQS, que indica o
 número máximo de arquivos que o programa pode manter abertos ao
