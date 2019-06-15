@@ -43,7 +43,8 @@ Record explode(string line, char character);
 /**
  * Concatenetes two strings by given delimiter
  * @param Record record
+ * @param char character
  * @return string
  *
  */
-string implode(Record record);
+string implode(Record record, char character);
