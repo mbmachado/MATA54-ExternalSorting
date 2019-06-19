@@ -1,10 +1,10 @@
-#include <iostream>
-#include <string.h>
 #include "sort.h"
-using namespace std;
 
-void insertRecord(Record record) {
+void insertRecord(Record record, ofstream &file) {
+    string r = implode(record, ',');
 
+    file << r;
+    file.close();
 }
 
 Record consultRecord(FILE* file) {

@@ -16,7 +16,7 @@ typedef struct record {
  * @param char[21] Record
  *
  */
-void insertRecord(Record record);
+void insertRecord(Record record, ofstream &file);
 
 /**
  * Retrieves a record from the file
