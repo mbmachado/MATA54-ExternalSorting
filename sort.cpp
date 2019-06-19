@@ -34,8 +34,7 @@ Record explode(string line, char character) {
 }
 
 string implode(Record record, char character) {
-    string line(record.key);
-
+    string line = record.key;
     line += character;
     line += record.content;
 
