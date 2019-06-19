@@ -1,4 +1,7 @@
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <fstream>
 using namespace std;
 const int MAXNARQS = 100;
 const int MAXMEM = 512000;
