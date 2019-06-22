@@ -4,7 +4,7 @@
 #include <fstream>
 using namespace std;
 const int MAXNARQS = 100;
-const int MAXMEM = 512000;
+const int MAXMEM = 512000000; //Bytes
 
 /**
  * The Record
@@ -16,38 +16,41 @@ typedef struct record {
 
 /**
  * Inserts a record into the file
- * @param char[21] Record
+ * @param Record record
+ * @param string fileName
  *
  */
-void insertRecord(Record record, ofstream &file);
+void insertRecord(Record record, string fileName);
 
 /**
  * Retrieves a record from the file
+ * @param string fileName
  * @return Record
  *
  */
-Record consultRecord(FILE* file);
+Record consultRecord(string fileName);
 
 /**
  * Sorts the file
+ * @param ifstream &file
  *
  */
-void sortFile(FILE* input);
+void sortFile(ifstream &file);
 
 /**
  * Splits a string by given delimiter
  * @param string line
- * @param char character
+ * @param char delimiter
  * @return Record
  *
  */
-Record explode(string line, char character);
+Record explode(string line, char delimiter);
 
 /**
  * Concatenetes two strings by given delimiter
  * @param Record record
- * @param char character
+ * @param char delimiter
  * @return string
  *
  */
-string implode(Record record, char character);
+string implode(Record record, char delimiter);
