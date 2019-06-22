@@ -3,8 +3,8 @@
 #include <string.h>
 #include <fstream>
 using namespace std;
-const int MAXNARQS = 100;
-const int MAXMEM = 512000000; //Bytes
+const int MAXNARQS = 4;
+const int MAXMEM = 1000; //Bytes
 
 /**
  * The Record
@@ -15,12 +15,21 @@ typedef struct record {
 } Record;
 
 /**
+ * The FileAttributes Record
+ */
+typedef struct fileAttributes {
+	string fileName;
+	long currentLine = 0;
+	short hasContent = 0;
+} FileAttributes;
+
+/**
  * Inserts a record into the file
  * @param Record record
  * @param string fileName
  *
  */
-void insertRecord(Record record, string fileName);
+void insertRecord(Record record, FileAttributes fa);
 
 /**
  * Retrieves a record from the file
@@ -28,7 +37,15 @@ void insertRecord(Record record, string fileName);
  * @return Record
  *
  */
-Record consultRecord(string fileName);
+Record consultRecord(FileAttributes fa);
+
+/**
+ * Comparison function used during sorting
+ * @param Record &i
+ * @param Record &j
+ *
+ */
+bool compareByKey(Record &i, Record &j);
 
 /**
  * Sorts the file

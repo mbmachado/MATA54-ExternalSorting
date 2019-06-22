@@ -1,34 +1,46 @@
-#include "sort.h"
+#include <algorithm>
 #include <sstream>
+#include <vector>
+#include "sort.h"
 
 void sortFile(ifstream &file) {
     int maxNumberRegisters = MAXMEM/sizeof(Record);
-    Record record;
+    vector<FileAttributes> files;
+    vector<Record> records;
     string line;
-
-    if (file.is_open() && file.good()) {
-
-        while(getline(file, line)) {
-            insertRecord(explode(line, ','), "saida.dat");
-        }
     
+    for (int i = 1; i <= MAXNARQS/2 * 2; i++) {
+        FileAttributes fa;
+        fa.fileName = 'A' + to_string(i) + ".dat";
+        files.push_back(fa);
+    }
+
+    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ; ++i) {
+        for (int i = 0; i < maxNumberRegisters && getline(file, line); i++) {
+           records.push_back(explode(line, ','));
+        }
+        sort(records.begin(), records.end(), compareByKey); 
+        for (vector<record>::iterator j = records.begin(); j != records.end(); ++j) {
+            insertRecord(*j, *i);
+        }
+        records.clear();
     }
 
     cout << maxNumberRegisters << endl;
 }
 
-void insertRecord(Record record, string fileName) {
+Record consultRecord(FileAttributes fa) {
+    ifstream file;
+}
+
+void insertRecord(Record record, FileAttributes fa) {
     string line;
     ofstream file;
 
-    file.open(fileName, ios::app);
+    file.open(fa.fileName, ios::app);
     line = implode(record, ',');
     file << line << endl;
     file.close();
-}
-
-Record consultRecord(FILE* file) {
-
 }
 
 Record explode(string line, char delimiter) {
@@ -50,3 +62,11 @@ string implode(Record record, char delimiter) {
 
     return line;
 }
+
+bool compareByKey(Record &i, Record &j) { 
+    if(strcmp(i.key, j.key) >= 0) {
+        return false;
+    }
+
+    return true;
+} 
