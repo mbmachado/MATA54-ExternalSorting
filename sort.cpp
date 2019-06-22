@@ -7,17 +7,14 @@ void sortFile(ifstream &file) {
     string line;
 
     if (file.is_open() && file.good()) {
-        getline(file, line);
 
-        while(!file.fail()) {
-            if (line.length() != 0) {
-                insertRecord(explode(line, ','), "saida.dat");
-            }
-            getline(file, line);
+        while(getline(file, line)) {
+            insertRecord(explode(line, ','), "saida.dat");
         }
     
     }
 
+    cout << maxNumberRegisters << endl;
 }
 
 void insertRecord(Record record, string fileName) {
@@ -36,13 +33,10 @@ Record consultRecord(FILE* file) {
 
 Record explode(string line, char delimiter) {
     istringstream iss(line);
-    string key, content;
     Record record;
 
-    getline(iss, key, delimiter);
-    getline(iss, content, delimiter);
-    strncpy(record.key, key.c_str(), 21);
-    strncpy(record.content, content.c_str(), 51);
+    iss.getline(record.key, 21, delimiter);
+    iss.getline(record.content, 51, delimiter);
 
     return record;
 }
