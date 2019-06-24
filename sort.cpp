@@ -4,7 +4,7 @@
 #include "sort.h"
 
 void sortFile(ifstream &file) {
-    int maxNumberRegisters = MAXMEM/sizeof(Record);
+    int maxNumberRecords = MAXMEM/sizeof(Record);
     vector<FileAttributes> files;
     vector<Record> records;
     string line;
@@ -16,7 +16,7 @@ void sortFile(ifstream &file) {
     }
 
     for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
-        for (int i = 0; i < maxNumberRegisters && getline(file, line); i++) {
+        for (int j = 0; j < maxNumberRecords && getline(file, line); j++) {
            records.push_back(explode(line, ','));
         }
         sort(records.begin(), records.end(), compareByKey);
@@ -26,7 +26,7 @@ void sortFile(ifstream &file) {
         records.clear();
     }
 
-    cout << maxNumberRegisters << endl;
+    cout << maxNumberRecords << endl;
 }
 
 Record consultRecord(FileAttributes fa) {
