@@ -3,3 +3,6 @@ all:
 faker:
 	pip install Faker
 	python3.6 input-generator.py;
+tester:
+	sort saida.dat -o testeSaida.dat
+	diff saida.dat testeSaida.dat
