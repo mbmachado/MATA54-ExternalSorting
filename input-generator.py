@@ -3,8 +3,10 @@ from faker import Faker
 fake = Faker()
 
 n = input();
-if n != '\n':
+if n == '\n':
     n = 50;
+n = int(n)
+
 
 with open("entrada.dat", "w+", encoding='utf-8') as f:
     for i in range(n):
