@@ -79,3 +79,10 @@ Record explode(string line, char delimiter);
  *
  */
 string implode(Record record, char delimiter);
+
+/**
+ * Deletes files A1 to An
+ * @param int n
+ *
+ */
+void deleteFiles(int n);

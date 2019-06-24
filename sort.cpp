@@ -76,3 +76,10 @@ bool compareByKey(Record &i, Record &j) {
 
     return true;
 }
+
+void deleteFiles(int n) {
+    for(int i = 1; i <=n; i++) {
+        string fileName = 'A' + to_string(i) + ".dat";
+        remove(fileName.c_str());
+    }
+}
