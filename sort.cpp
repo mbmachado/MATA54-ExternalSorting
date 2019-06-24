@@ -8,18 +8,18 @@ void sortFile(ifstream &file) {
     vector<FileAttributes> files;
     vector<Record> records;
     string line;
-    
+
     for (int i = 1; i <= MAXNARQS/2 * 2; i++) {
         FileAttributes fa;
         fa.fileName = 'A' + to_string(i) + ".dat";
         files.push_back(fa);
     }
 
-    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ; ++i) {
+    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
         for (int i = 0; i < maxNumberRegisters && getline(file, line); i++) {
            records.push_back(explode(line, ','));
         }
-        sort(records.begin(), records.end(), compareByKey); 
+        sort(records.begin(), records.end(), compareByKey);
         for (vector<record>::iterator j = records.begin(); j != records.end(); ++j) {
             insertRecord(*j, *i);
         }
@@ -54,7 +54,7 @@ Record explode(string line, char delimiter) {
 }
 
 string implode(Record record, char delimiter) {
-    string line; 
+    string line;
 
     line = record.key;
     line += delimiter;
@@ -63,10 +63,10 @@ string implode(Record record, char delimiter) {
     return line;
 }
 
-bool compareByKey(Record &i, Record &j) { 
+bool compareByKey(Record &i, Record &j) {
     if(strcmp(i.key, j.key) >= 0) {
         return false;
     }
 
     return true;
-} 
+}
