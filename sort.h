@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <sstream>
+#include <vector>
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -49,10 +52,15 @@ bool compareByKey(Record &i, Record &j);
 
 /**
  * Sorts the file
- * @param ifstream &file
  *
  */
-void sortFile(ifstream &file);
+void externalSort();
+
+/**
+ * Initialize A*.dat files with runs
+ *
+ */
+void initializeFiles();
 
 /**
  * Splits a string by given delimiter

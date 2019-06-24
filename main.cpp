@@ -1,11 +1,7 @@
 #include "sort.h"
 
 int main() {
-	ifstream file;
-  	file.open("entrada.dat");
-
-  	sortFile(file);
-
-  	file.close();
+  	initializeFiles();
+  	externalSort();
     return 0;
 }

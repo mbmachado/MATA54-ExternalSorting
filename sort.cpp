@@ -1,31 +1,37 @@
-#include <algorithm>
-#include <sstream>
-#include <vector>
 #include "sort.h"
+int maxNumberRecords = MAXMEM/sizeof(Record);
+vector<FileAttributes> files;
 
-void sortFile(ifstream &file) {
-    int maxNumberRecords = MAXMEM/sizeof(Record);
-    vector<FileAttributes> files;
+void externalSort() {    
+}
+
+void initializeFiles() {
     vector<Record> records;
+    ifstream file;
     string line;
 
+    file.open("entrada.dat");
+    
     for (int i = 1; i <= MAXNARQS/2 * 2; i++) {
         FileAttributes fa;
         fa.fileName = 'A' + to_string(i) + ".dat";
         files.push_back(fa);
     }
 
-    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
-        for (int j = 0; j < maxNumberRecords && getline(file, line); j++) {
-           records.push_back(explode(line, ','));
+    while(!file.fail()) {
+        for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
+            for (int j = 0; j < maxNumberRecords && getline(file, line); j++) {
+               records.push_back(explode(line, ','));
+            }
+            sort(records.begin(), records.end(), compareByKey);
+            for (vector<record>::iterator j = records.begin(); j != records.end(); ++j) {
+                insertRecord(*j, *i);
+            }
+            records.clear();
         }
-        sort(records.begin(), records.end(), compareByKey);
-        for (vector<record>::iterator j = records.begin(); j != records.end(); ++j) {
-            insertRecord(*j, *i);
-        }
-        records.clear();
     }
 
+    file.close();
     cout << maxNumberRecords << endl;
 }
 
