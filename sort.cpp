@@ -3,13 +3,31 @@ int maxNumberRecords = MAXMEM/sizeof(Record);
 int runSize = maxNumberRecords;
 vector<FileAttributes> files;
 
-void externalSort() { 
+
+
+
+
+void externalSort() {
+    Record record;
     vector<Record> records;
 
-    //Carrega o primeiro registro dos Arquivos A*.dat no vector records;
-    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
-        records.push_back(consultRecord(*i)); 
+    
+    for (vector<FileAttributes>::iterator i = files.begin() + files.size() / 2 + 1; i != files.end(); ++i) {
+        //Carrega o primeiro registro dos Arquivos A*.dat no vector records;
+        for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
+            records.push_back(consultRecord(*i)); 
+        }
+
+        sort(records.begin(), records.end(), compareByKey);
+        record = records[0];
+        while(true) { //enquanto as runs tiverem registros
+
+        }
+
+        records.erase(records.begin());
     }
+    
+    
 
 }
 
@@ -52,7 +70,8 @@ Record consultRecord(FileAttributes fa) {
 
     for (i = 0; getline(file, line); i++) {
         if (fa.currentLine == i) {
-            record = explode(line, ',');    
+            record = explode(line, ','); 
+            record.file = fa.fileName; 
             break;
         }
     }

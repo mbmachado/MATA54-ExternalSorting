@@ -15,6 +15,7 @@ const int MAXMEM = 1000; //Bytes
 typedef struct record {
 	char key[21];
 	char content[51];
+	string file;
 } Record;
 
 /**
