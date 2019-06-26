@@ -23,7 +23,6 @@ typedef struct record {
 typedef struct fileAttributes {
 	string fileName;
 	long currentLine = 0;
-	short hasContent = 0;
 } FileAttributes;
 
 /**

@@ -1,8 +1,16 @@
 #include "sort.h"
 int maxNumberRecords = MAXMEM/sizeof(Record);
+int runSize = maxNumberRecords;
 vector<FileAttributes> files;
 
-void externalSort() {    
+void externalSort() { 
+    vector<Record> records;
+
+    //Carrega o primeiro registro dos Arquivos A*.dat no vector records;
+    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
+        records.push_back(consultRecord(*i)); 
+    }
+
 }
 
 void initializeFiles() {
@@ -10,13 +18,13 @@ void initializeFiles() {
     ifstream file;
     string line;
 
-    file.open("entrada.dat");
-    
     for (int i = 1; i <= MAXNARQS/2 * 2; i++) {
         FileAttributes fa;
         fa.fileName = 'A' + to_string(i) + ".dat";
         files.push_back(fa);
     }
+
+    file.open("entrada.dat");
 
     while(!file.fail()) {
         for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
@@ -24,7 +32,7 @@ void initializeFiles() {
                records.push_back(explode(line, ','));
             }
             sort(records.begin(), records.end(), compareByKey);
-            for (vector<record>::iterator j = records.begin(); j != records.end(); ++j) {
+            for (vector<Record>::iterator j = records.begin(); j != records.end(); ++j) {
                 insertRecord(*j, *i);
             }
             records.clear();
@@ -32,11 +40,26 @@ void initializeFiles() {
     }
 
     file.close();
-    cout << maxNumberRecords << endl;
 }
 
 Record consultRecord(FileAttributes fa) {
+    Record record;
+    string line;
     ifstream file;
+    int i;
+
+    file.open(fa.fileName);
+
+    for (i = 0; getline(file, line); i++) {
+        if (fa.currentLine == i) {
+            record = explode(line, ',');    
+            break;
+        }
+    }
+    fa.currentLine = i;
+
+    file.close();
+    return record;
 }
 
 void insertRecord(Record record, FileAttributes fa) {
