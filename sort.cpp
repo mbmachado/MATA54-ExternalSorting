@@ -14,20 +14,26 @@ void externalSort() {
     
     for (vector<FileAttributes>::iterator i = files.begin() + files.size() / 2 + 1; i != files.end(); ++i) {
         //Carrega o primeiro registro dos Arquivos A*.dat no vector records;
-        for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
-            records.push_back(consultRecord(*i)); 
+        for (vector<FileAttributes>::iterator m = files.begin(); m != files.begin() + files.size() / 2; ++i) {
+            records.push_back(consultRecord(*m)); 
         }
 
-        sort(records.begin(), records.end(), compareByKey);
-        record = records[0];
-        while(true) { //enquanto as runs tiverem registros
+        for (int j = 0; j < runSize * files.size() / 2; j++) { //enquanto as runs tiverem registros
+            sort(records.begin(), records.end(), compareByKey);
+            record = records[0];
+            records.erase(records.begin());
+            insertRecord(record, *i);
+            vector<FileAttributes>::iterator k;
+            for (k = files.begin(); k != files.end(); ++k) {
+                FileAttributes fa = *k;
+                if (fa.fileName == record.file) {
+                    records.push_back(consultRecord(*k));
+                }
+            }
 
-        }
-
-        records.erase(records.begin());
+        } 
+        
     }
-    
-    
 
 }
 
@@ -56,7 +62,7 @@ void initializeFiles() {
             records.clear();
         }
     }
-
+    
     file.close();
 }
 
