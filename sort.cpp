@@ -3,36 +3,34 @@ int maxNumberRecords = MAXMEM/sizeof(Record);
 int runSize = maxNumberRecords;
 vector<FileAttributes> files;
 
-
-
-
-
 void externalSort() {
     Record record;
     vector<Record> records;
-
+    string line;
     
-    for (vector<FileAttributes>::iterator i = files.begin() + files.size() / 2 + 1; i != files.end(); ++i) {
-        //Carrega o primeiro registro dos Arquivos A*.dat no vector records;
-        for (vector<FileAttributes>::iterator m = files.begin(); m != files.begin() + files.size() / 2; ++i) {
-            records.push_back(consultRecord(*m)); 
+
+    for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
+        FileAttributes fa = *i;
+        ifstream file;
+
+        file.open(fa.fileName);
+        while(getline(file, line)) {
+            records.push_back(explode(line, ','));
+        }
+        file.close();
+        
+        sort(records.begin(), records.end(), compareByKey);
+        
+        for (vector<Record>::iterator j = records.begin(); j != records.end(); ++j) {
+            ofstream file;
+
+            file.open("saida.dat", ios::app);
+            line = implode(*j, ',');
+            file << line << endl;
+            file.close();
         }
 
-        for (int j = 0; j < runSize * files.size() / 2; j++) { //enquanto as runs tiverem registros
-            sort(records.begin(), records.end(), compareByKey);
-            record = records[0];
-            records.erase(records.begin());
-            insertRecord(record, *i);
-            vector<FileAttributes>::iterator k;
-            for (k = files.begin(); k != files.end(); ++k) {
-                FileAttributes fa = *k;
-                if (fa.fileName == record.file) {
-                    records.push_back(consultRecord(*k));
-                }
-            }
-
-        } 
-        
+        records.clear();
     }
 
 }
@@ -62,7 +60,7 @@ void initializeFiles() {
             records.clear();
         }
     }
-    
+
     file.close();
 }
 
@@ -70,20 +68,14 @@ Record consultRecord(FileAttributes fa) {
     Record record;
     string line;
     ifstream file;
-    int i;
 
     file.open(fa.fileName);
 
-    for (i = 0; getline(file, line); i++) {
-        if (fa.currentLine == i) {
-            record = explode(line, ','); 
-            record.file = fa.fileName; 
-            break;
-        }
-    }
-    fa.currentLine = i;
-
+    getline(file, line);
+        
     file.close();
+    
+    record = explode(line, ',');
     return record;
 }
 
