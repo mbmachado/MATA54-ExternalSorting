@@ -8,7 +8,6 @@ void externalSort() {
     vector<Record> records;
     string line;
     
-
     for (vector<FileAttributes>::iterator i = files.begin(); i != files.begin() + files.size() / 2; ++i) {
         FileAttributes fa = *i;
         ifstream file;
@@ -19,18 +18,16 @@ void externalSort() {
         }
         file.close();
         
-        sort(records.begin(), records.end(), compareByKey);
-        
-        for (vector<Record>::iterator j = records.begin(); j != records.end(); ++j) {
-            ofstream file;
+    }
 
-            file.open("saida.dat", ios::app);
-            line = implode(*j, ',');
-            file << line << endl;
-            file.close();
-        }
-
-        records.clear();
+    sort(records.begin(), records.end(), compareByKey);
+    
+    for (vector<Record>::iterator j = records.begin(); j != records.end(); ++j) {
+        ofstream file;
+        file.open("saida.dat", ios::app);
+        line = implode(*j, ',');
+        file << line << endl;
+        file.close();
     }
 
 }
@@ -115,11 +112,4 @@ bool compareByKey(Record &i, Record &j) {
     }
 
     return true;
-}
-
-void deleteFiles(int n) {
-    for(int i = 1; i <=n; i++) {
-        string fileName = 'A' + to_string(i) + ".dat";
-        remove(fileName.c_str());
-    }
 }

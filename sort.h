@@ -6,8 +6,8 @@
 #include <string.h>
 #include <fstream>
 using namespace std;
-const int MAXNARQS = 4;
-const int MAXMEM = 1000; //Bytes
+const int MAXNARQS = 100;
+const int MAXMEM = 5120; //Bytes
 
 /**
  * The Record
@@ -79,10 +79,3 @@ Record explode(string line, char delimiter);
  *
  */
 string implode(Record record, char delimiter);
-
-/**
- * Deletes files A1 to An
- * @param int n
- *
- */
-void deleteFiles(int n);
