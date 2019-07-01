@@ -107,7 +107,13 @@ string implode(Record record, char delimiter) {
 }
 
 bool compareByKey(Record &i, Record &j) {
-    if(strcmp(i.key, j.key) >= 0) {
+    int comp = strcmp(i.key, j.key);
+
+    if(comp == 0) {
+        if (strcmp(i.content, j.content) >= 0) {
+            return false;
+        }
+    } else if(comp > 0) {
         return false;
     }
 
